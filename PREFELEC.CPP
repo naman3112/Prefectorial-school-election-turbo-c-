@@ -5,8 +5,8 @@
 #include<dos.h>
 #include<string.h>
 #include<stdio.h>
+#include<fstream.h>
 
-dsdssdads2
 //*************************** End  of Header Files **************************
 //*************************** class definition ******************************
 class candidate
@@ -105,7 +105,7 @@ void principal(int mcount,int fcount,int mindex[],int findex[])
     cin>>id;
     cout<<endl<<"P A S S W O R D ";
     cin>>pass;
-    if(id!=3112||pass==1234)
+    if(id!=3112||pass!=1234)
      {	cout<<"I N V A L I D  C R E D E N T I A L S";
 	return;
      }
@@ -158,16 +158,19 @@ void principal(int mcount,int fcount,int mindex[],int findex[])
 	 cout<<"Select the UID to caste vote for the candidate"<<endl;
 	 cin>>voteuid;
 	for(int o=0;o<mcount;o++)
-	 { if(voteuid!=mindex[o])
-	    { cout<<" INAVALID SELECTION OF CANDIDATE "<<endl;
+	 { if(voteuid==mindex[o])
+	    { cout<<" VALID SELECTION OF CANDIDATE "<<endl;
 	      flag=1;
 	     break;
 	    }
 
 	 }
-	 if(flag==1)
-	   continue;
 
+	 if(flag==0)
+	   {
+	   cout<<" Invalid Selection"<<endl;
+	   continue;
+	   }
 	if(candivote[0]==voteuid||candivote[1]==voteuid||candivote[2]==voteuid)
 			{ cout<<"vote already casted top this candidate "<<endl;
 			  cout<<"again select the candidate "<<endl;
@@ -240,16 +243,17 @@ void principal(int mcount,int fcount,int mindex[],int findex[])
 	 cout<<"Select the UID to caste vote for the candidate"<<endl;
 	 cin>>voteuid;
 	for(int o=0;o<fcount;o++)
-	 { if(voteuid!=findex[o])
-	    { cout<<" INAVALID SELECTION OF CANDIDATE "<<endl;
+	 { if(voteuid==findex[o])
+	    { cout<<" VALID SELECTION OF CANDIDATE "<<endl;
 	      flag=1;
 	     break;
 	    }
 
 	 }
-	 if(flag==1)
+	 if(flag==0)
+	 { cout<<"invalid selection "<<endl;
 	   continue;
-
+	  }
 		cout<<"Select the UID to caste vote for the candidate"<<endl;
 		cin>>voteuid;
 	      if(candivote[0]==voteuid||candivote[1]==voteuid||candivote[2]==voteuid)
@@ -288,22 +292,30 @@ void principal(int mcount,int fcount,int mindex[],int findex[])
 
 //************************ MENU  2 *****************************************
 
+	cout<<" A U T H E N T I C A T E  Y O U R S E L F ";
+/*     cout<<endl<<"USER ID :"<<endl;
+     cin>>id;
+     cout<<"PASSWORD : "<<endl;
+  if(id!=3112||pass==1234)
+     {	cout<<"I N V A L I D  C R E D E N T I A L S";
+	return;
+     } */
+ofstream fout;
+fout.open("result.txt",ios::out);
+fout<<" votess for the post of head boy "<<endl;
 
-
-
-
-
-
-
-
-
-
+	for(int i=0,j=0;i<mcount;i++,j++)
+	 { fout<<" U I D "<<" "<<noofcandi[mindex[j]-1].UID;
+	   fout<<"name"<<noofcandi[mindex[j]-1].name<<" ";
+	   fout<<"class"<<noofcandi[mindex[j]-1].class1<<" ";
+	   fout<<"vots casted"<<noofcandi[mindex[j]-1].vote;
+	   fout<<endl<<endl<< "end of details of candidate ";
  }// end of principal portal
 
+fout.close();
+  cout<<" file successfully created";
 
-
-
-
+ }//principal portal ending
 int main()
 {                          //main fucntion
 
@@ -538,5 +550,4 @@ delay(900);
    getch();
    return 0;
 
-   }
-
+   }   //main()
