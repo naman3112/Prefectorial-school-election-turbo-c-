@@ -92,10 +92,43 @@ int candidate :: castevote(int priority ,int votedby)
   return 0;
   } // function defintion
 //**************** end of function definition ******************************
+//***************** Result text file creation function***********************
+ void result(int mcount,int fcount, int mindex[],int findex[])
+ {
+  ofstream fout;
+  fout.open("result.txt",ios::out);
+  fout<<" votess for the post of head boy "<<endl;
+//******************** HEAD BOY CANDIDATE VOTES****************************
+	for(int i=0,j=0;i<mcount;i++,j++)
+	 { fout<<" U I D "<<" "<<noofcandi[mindex[j]-1].UID;
+	   fout<<"name"<<noofcandi[mindex[j]-1].name<<" ";
+	   fout<<"class"<<noofcandi[mindex[j]-1].class1<<" ";
+	   fout<<"vots casted"<<noofcandi[mindex[j]-1].vote;
+	   fout<<endl<<endl<< "end of details of candidate ";
+	 }
+//****************** END OF HEAD BOY CANDIDATES ***************************
 
+//***************** HEAD GIRL CANDIDATES VOTES *****************************
+  fout<<endl<<endl;
+  fout<<" CANDIDATES FOR THE POST OF HEAD GIRL "<<endl<<endl;
+
+
+	for( i=0,j=0;i<fcount;i++,j++)
+	 { fout<<" U I D "<<" "<<noofcandi[findex[j]-1].UID;
+	   fout<<"name"<<noofcandi[findex[j]-1].name<<" ";
+	   fout<<"class"<<noofcandi[findex[j]-1].class1<<" ";
+	   fout<<"vots casted"<<noofcandi[findex[j]-1].vote;
+	   fout<<endl<<endl<< "end of details of candidate ";
+	 }
+//*************************** END OF HEAD GIRL CANDIDATES*******************
+
+fout.close();
+  cout<<" file successfully created";
+ } // result function end
+
+//*********************** END OF RESULT FUNCTION************************
 
 //********************** Portals for casting vote *************************
-
 void principal(int mcount,int fcount,int mindex[],int findex[])
 {  int id,pass;
     clrscr();
@@ -292,34 +325,44 @@ void principal(int mcount,int fcount,int mindex[],int findex[])
 
 //************************ MENU  2 *****************************************
 
-	cout<<" A U T H E N T I C A T E  Y O U R S E L F ";
-/*     cout<<endl<<"USER ID :"<<endl;
+    if(princhoice==2)
+    {
+     cout<<" A U T H E N T I C A T E  Y O U R S E L F ";
+     cout<<endl<<"USER ID :"<<endl;
      cin>>id;
      cout<<"PASSWORD : "<<endl;
-  if(id!=3112||pass==1234)
+    if(id!=3112||pass==1234)
      {	cout<<"I N V A L I D  C R E D E N T I A L S";
 	return;
-     } */
-ofstream fout;
-fout.open("result.txt",ios::out);
-fout<<" votess for the post of head boy "<<endl;
+     }
 
-	for(int i=0,j=0;i<mcount;i++,j++)
-	 { fout<<" U I D "<<" "<<noofcandi[mindex[j]-1].UID;
-	   fout<<"name"<<noofcandi[mindex[j]-1].name<<" ";
-	   fout<<"class"<<noofcandi[mindex[j]-1].class1<<" ";
-	   fout<<"vots casted"<<noofcandi[mindex[j]-1].vote;
-	   fout<<endl<<endl<< "end of details of candidate ";
- }// end of principal portal
+     result(mcount,fcount,mindex,findex);// calling for creating result function
+    }// menu 2 end
 
-fout.close();
-  cout<<" file successfully created";
+    if(princhoice!=2||princhoice!=1)
+      { clrscr();
+	cout<<endl<<endl<<endl<<" I N V A L I D  C H O I C E";
+	return ;
+
+      }
+
+
+
+
+
+
 
  }//principal portal ending
+
+
+
+
+
+
 int main()
 {                          //main fucntion
 
-	 clrscr();      // clearing the screen
+	 clrscr();
 //**********************  main page ****************************************
 //*********************** Variable declaration******************************
 int userid,password;    //principal userid and password
@@ -536,18 +579,43 @@ cout<< "                S U C C E S S F U L L Y"<<endl;
 delay(900);
 //*************** End of phase 1 election set up ***************************
 
-//**************** Phase 2 :- casting vote initiated **********************\
+//**************** Phase 2 :- casting vote initiated **********************
+      int comeout=0;
+	do
 
-   cout<<"hello mr. principal ";
-   principal(mcount,fcount,mindex,findex);
+	{
+	int portalcaste;
+	 cout<<endl<<endl<<" W H O  A R E  Y O U "<<endl<<endl;
+	  cout<<"1:  P R I N C I P A L"<<endl;
+	  cout<<"2:  F A C U L T Y "<<endl;
+	  cout<<"3:  S T U D E N T "<<endl;
+	  cin>>portalcaste;
+
+	//*--------- principal portal invoked -----------------*
+	  switch(portalcaste)
+	      {
+	      case 1: principal(mcount,fcount,mindex,findex);
+			   break;
+	      case 2: // faculty();
+		      // break;
+	      case 3: //student();
+		      //break;
+
+
+	      case 4:   comeout=-1;
+			break;
+	      default: continue;
+	      }
+
+	 if(comeout==-1)
+	    break;
+	  }while(1);// end of do while
 
 
 
-
-
-
-
+//***************************************************************************
    getch();
    return 0;
 
    }   //main()
+
