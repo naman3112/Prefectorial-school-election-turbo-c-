@@ -6,7 +6,7 @@
 #include<string.h>
 #include<stdio.h>
 
-
+dsdssdads2
 //*************************** End  of Header Files **************************
 //*************************** class definition ******************************
 class candidate
