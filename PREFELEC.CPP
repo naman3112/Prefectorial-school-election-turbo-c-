@@ -331,6 +331,7 @@ void principal(int mcount,int fcount,int mindex[],int findex[])
      cout<<endl<<"USER ID :"<<endl;
      cin>>id;
      cout<<"PASSWORD : "<<endl;
+     cin>>pass;
     if(id!=3112||pass==1234)
      {	cout<<"I N V A L I D  C R E D E N T I A L S";
 	return;
@@ -352,7 +353,241 @@ void principal(int mcount,int fcount,int mindex[],int findex[])
 
 
 
- }//principal portal ending
+ }//principal portal ending--------------------------------------------------
+
+
+
+
+
+
+int facultyvoter[1000];
+int votercountf=0;
+
+ //************************** Faculty portal*********************************
+ void faculty(int mcount,int fcount,int mindex[],int findex[])
+   {   int userid; int password;
+   cout<<endl<<endl<<"                A U T H O N T I C A T E   Y O U R S E L F ";
+   cout<<endl<<endl<<" U S E R I D "<<endl;
+   cin>>userid;
+   cout<<endl;
+   cout<<" P A S S W O R D "<<endl;
+   cin>>password;
+   cout<<endl;
+
+   int flagf=0;
+   ifstream fin;
+   fin.seekg(0) ;
+   fin.open("faculty.txt",ios::in);
+	while(fin.eof())
+	   { int id;
+	     int code;
+	      fin>>id;
+	      fin>>code;
+	      if(id==userid&&code==password)
+		{
+		 for(int i=0;i<=votercountf;i++)
+		   { if(userid==facultyvoter[i])
+		       { flagf=-1;
+			break;
+		       }
+
+		   }
+		    if(flagf==-1)
+		    { cout<<" vote already casted ";
+		      return ;
+		    }
+	      facultyvoter[votercountf]=userid;
+	      votercountf++;
+		  flagf=0;
+		  break;
+	      } //end of if
+
+
+      flagf=-1;
+
+     }//end of while
+
+       fin.close();
+	  if(flagf==-1)
+	{   cout<<"wrong user id or pasword";
+		return;
+	 }
+
+
+
+//common code for casting vote to the candidates ------------------------
+
+	  clrscr();
+	 int  k=0;
+	 cout<<"********************** Candidates for the post of head boy ************";
+	      cout<<endl<<endl;
+
+    for(int i=0;i<mcount;i++,k++)
+	{
+	cout<<" DO REMEMBER THE UID TO CASTE THE VOTE TO THE CANDIDATE"<<endl;
+	cout<<" Displaying details  of candidate"<<endl<<endl;
+	noofcandi[mindex[k]-1].display();
+	cout<<"*********************End of the details of "<<i+1<<"candidate************";
+	 cout<<endl<<"Press enter to proceed "<<endl;
+	getch();
+	clrscr();
+
+       }// end of for loop
+//***************************************************************************
+	 int prior[3];// to check so that no candidate is given dual priority
+
+	 int candivote[3]={-1,-1,-1}; // check for the repeating voting for a single candidate
+
+	 int m=0;
+
+ //******************* casting vote to head boy *****************************
+	 clrscr();
+    while(1){
+	      if(prior[0]==-1&&prior[1]==-1&&prior[2]==-1)
+		 {clrscr();
+		  cout<<" Vote casted successfully "<<endl;
+		  cout<<" Thank you "<<endl;
+		  break;
+		  }
+
+
+	 int voteuid,votepriority,flag=0;
+	 cout<<"Select the UID to caste vote for the candidate"<<endl;
+	 cin>>voteuid;
+	for(int o=0;o<mcount;o++)
+	 { if(voteuid==mindex[o])
+	    { cout<<" VALID SELECTION OF CANDIDATE "<<endl;
+	      flag=1;
+	     break;
+	    }
+
+	 }
+
+	 if(flag==0)
+	   {
+	   cout<<" Invalid Selection"<<endl;
+	   continue;
+	   }
+	if(candivote[0]==voteuid||candivote[1]==voteuid||candivote[2]==voteuid)
+			{ cout<<"vote already casted top this candidate "<<endl;
+			  cout<<"again select the candidate "<<endl;
+			  continue;
+
+			 }
+		cout<<"enter the priority 1,2 or 3 "<<endl;
+		cin>>votepriority;
+			if(prior[votepriority-1]== -1)
+			 { cout<<" priority already assigned"<<endl;
+			   cout<<endl<<"redirecting to again choosing";
+			   continue;
+			 }
+
+		noofcandi[voteuid-1].castevote(votepriority,2);
+		candivote[m]=voteuid;
+		m++;
+		prior[votepriority-1]=-1;
+
+
+
+	       } // while loop
+
+
+
+
+
+//********************** Printing the candidates for the post of head girl
+
+   cout<<endl<<"Press Enter to see the list of the candidates for"<<endl
+   <<"the post of head girl"<<endl;
+
+		getch();
+		clrscr();k=0  ;
+
+	 cout<<"  ********* Candidates for the post of head girl************";
+	 cout<<endl<<endl;
+
+  for(i=0;i<fcount;i++,k++)
+    {
+    cout<<" Do REMEMBER THE UID TO CASTE VOTE ";
+     cout<<endl<<endl<<" Displaying details  of candidate"<<endl<<endl;
+     noofcandi[findex[k]-1].display();
+     cout<<endl<<endl;
+     cout<<"*********************End of the details of "<<i+1<<"candidate************";
+      cout<<endl<<"Press enter to proceed ";
+    getch();
+    clrscr();
+
+   }// end of for loop
+//**************************** casting vote to head girl*******************
+	    candivote[0]=-1;
+	    candivote[1]=-1;
+	    candivote[2]=-1;
+	     m=0;
+	     prior[0]=0;
+	     prior[1]=0;
+	     prior[2]=0;
+
+	while(1){
+	      if(prior[0]==-1&&prior[1]==-1&&prior[2]==-1)
+		 {clrscr();
+		  cout<<" Vote casted successfully "<<endl;
+		  cout<<" Thank you "<<endl;
+		  break;
+		  }
+
+
+	 int voteuid,votepriority,flag=0;
+	 cout<<"Select the UID to caste vote for the candidate"<<endl;
+	 cin>>voteuid;
+	for(int o=0;o<fcount;o++)
+	 { if(voteuid==findex[o])
+	    { cout<<" VALID SELECTION OF CANDIDATE "<<endl;
+	      flag=1;
+	     break;
+	    }
+
+	 }
+	 if(flag==0)
+	 { cout<<"invalid selection "<<endl;
+	   continue;
+	  }
+		cout<<"Select the UID to caste vote for the candidate"<<endl;
+		cin>>voteuid;
+	      if(candivote[0]==voteuid||candivote[1]==voteuid||candivote[2]==voteuid)
+			{ cout<<"vote already casted top this candidate ";
+			  cout<<"again select the candidate ";
+			  continue;
+
+			 }
+		cout<<"enter the priority 1,2 or 3 "<<endl;
+		cin>>votepriority;
+			if(prior[votepriority-1]== -1)
+			 { cout<<" priority already assigned";
+			   cout<<endl<<"redirecting to again choosing";
+			   continue;
+			 }
+
+		noofcandi[voteuid-1].castevote(votepriority,2);
+		candivote[m]=voteuid;
+		m++;
+		prior[votepriority-1]=-1;
+
+
+
+	       } // while loop
+
+
+
+
+
+
+	getch();
+
+
+
+
+
+} // end of the faculty portal
 
 
 
@@ -596,8 +831,8 @@ delay(900);
 	      {
 	      case 1: principal(mcount,fcount,mindex,findex);
 			   break;
-	      case 2: // faculty();
-		      // break;
+	      case 2: faculty(mcount,fcount,mindex,findex);
+		       break;
 	      case 3: //student();
 		      //break;
 
