@@ -212,6 +212,13 @@ void principal(int mcount,int fcount,int mindex[],int findex[])
 			 }
 		cout<<"enter the priority 1,2 or 3 "<<endl;
 		cin>>votepriority;
+		 if(votepriority!=1&&votepriority!=2&&votepriority!=3&&votepriority!=-1)
+			{
+			cout<<endl<<" invalid selection of priotity";
+			cout<<endl<<endl;
+			continue;
+			}
+
 			if(prior[votepriority-1]== -1)
 			 { cout<<" priority already assigned"<<endl;
 			   cout<<endl<<"redirecting to again choosing";
@@ -287,8 +294,7 @@ void principal(int mcount,int fcount,int mindex[],int findex[])
 	 { cout<<"invalid selection "<<endl;
 	   continue;
 	  }
-		cout<<"Select the UID to caste vote for the candidate"<<endl;
-		cin>>voteuid;
+
 	      if(candivote[0]==voteuid||candivote[1]==voteuid||candivote[2]==voteuid)
 			{ cout<<"vote already casted top this candidate ";
 			  cout<<"again select the candidate ";
@@ -297,6 +303,11 @@ void principal(int mcount,int fcount,int mindex[],int findex[])
 			 }
 		cout<<"enter the priority 1,2 or 3 "<<endl;
 		cin>>votepriority;
+		     if(votepriority!=1&&votepriority!=2&&votepriority!=3&&votepriority!=-1)
+			{cout<<endl<<" invalid selection of priotity";
+			cout<<endl<<endl;
+			continue;
+			}
 			if(prior[votepriority-1]== -1)
 			 { cout<<" priority already assigned";
 			   cout<<endl<<"redirecting to again choosing";
@@ -332,7 +343,7 @@ void principal(int mcount,int fcount,int mindex[],int findex[])
      cin>>id;
      cout<<"PASSWORD : "<<endl;
      cin>>pass;
-    if(id!=3112||pass==1234)
+    if(id!=3112||pass!=1234)
      {	cout<<"I N V A L I D  C R E D E N T I A L S";
 	return;
      }
@@ -360,11 +371,9 @@ void principal(int mcount,int fcount,int mindex[],int findex[])
 
 
 
-int facultyvoter[1000];
-int votercountf=0;
 
  //************************** Faculty portal*********************************
- void faculty(int mcount,int fcount,int mindex[],int findex[])
+ void faculty(int mcount,int fcount,int mindex[],int findex[],int facultyvoter[],int * votercountf)
    {   int userid; int password;
    cout<<endl<<endl<<"                A U T H O N T I C A T E   Y O U R S E L F ";
    cout<<endl<<endl<<" U S E R I D "<<endl;
@@ -373,42 +382,43 @@ int votercountf=0;
    cout<<" P A S S W O R D "<<endl;
    cin>>password;
    cout<<endl;
+   cout<<"value of votercountf is "<<" "<<votercountf<<endl;
+   for(int i=0;i<=*votercountf;i++)
+		   { if(userid==facultyvoter[i])
+		       { cout<<"votr already casted ";
+			 return;
 
-   int flagf=0;
+
+		      }
+		    cout<<" value of facultyvoter[i]"<<"  " <<facultyvoter[i];
+
+		   }
+
+
    ifstream fin;
    fin.seekg(0) ;
    fin.open("faculty.txt",ios::in);
+      int wrong=0;
 	while(fin.eof())
 	   { int id;
 	     int code;
 	      fin>>id;
 	      fin>>code;
 	      if(id==userid&&code==password)
-		{
-		 for(int i=0;i<=votercountf;i++)
-		   { if(userid==facultyvoter[i])
-		       { flagf=-1;
-			break;
-		       }
-
-		   }
-		    if(flagf==-1)
-		    { cout<<" vote already casted ";
-		      return ;
-		    }
-	      facultyvoter[votercountf]=userid;
-	      votercountf++;
-		  flagf=0;
+	      {
+	       facultyvoter[*votercountf]=userid;
+	      *votercountf++;
+	       wrong=0;
 		  break;
 	      } //end of if
 
+	 wrong=-1;
 
-      flagf=-1;
 
      }//end of while
 
        fin.close();
-	  if(flagf==-1)
+	  if(wrong==-1)
 	{   cout<<"wrong user id or pasword";
 		return;
 	 }
@@ -422,7 +432,7 @@ int votercountf=0;
 	 cout<<"********************** Candidates for the post of head boy ************";
 	      cout<<endl<<endl;
 
-    for(int i=0;i<mcount;i++,k++)
+    for( i=0;i<mcount;i++,k++)
 	{
 	cout<<" DO REMEMBER THE UID TO CASTE THE VOTE TO THE CANDIDATE"<<endl;
 	cout<<" Displaying details  of candidate"<<endl<<endl;
@@ -476,6 +486,12 @@ int votercountf=0;
 			 }
 		cout<<"enter the priority 1,2 or 3 "<<endl;
 		cin>>votepriority;
+			 if(votepriority!=1&&votepriority!=2&&votepriority!=3&&votepriority!=-1)
+			{cout<<endl<<" invalid selection of priotity";
+			cout<<endl<<endl;
+			continue;
+			}
+
 			if(prior[votepriority-1]== -1)
 			 { cout<<" priority already assigned"<<endl;
 			   cout<<endl<<"redirecting to again choosing";
@@ -551,8 +567,7 @@ int votercountf=0;
 	 { cout<<"invalid selection "<<endl;
 	   continue;
 	  }
-		cout<<"Select the UID to caste vote for the candidate"<<endl;
-		cin>>voteuid;
+
 	      if(candivote[0]==voteuid||candivote[1]==voteuid||candivote[2]==voteuid)
 			{ cout<<"vote already casted top this candidate ";
 			  cout<<"again select the candidate ";
@@ -561,6 +576,12 @@ int votercountf=0;
 			 }
 		cout<<"enter the priority 1,2 or 3 "<<endl;
 		cin>>votepriority;
+		   if(votepriority!=1&&votepriority!=2&&votepriority!=3&&votepriority!=-1)
+			{cout<<endl<<" invalid selection of priotity";
+			cout<<endl<<endl;
+			continue;
+			}
+
 			if(prior[votepriority-1]== -1)
 			 { cout<<" priority already assigned";
 			   cout<<endl<<"redirecting to again choosing";
@@ -595,7 +616,8 @@ int votercountf=0;
 
 
 int main()
-{                          //main fucntion
+{  int facultyvoter[400];
+   int votercountf=0;	                        //main fucntion
 
 	 clrscr();
 //**********************  main page ****************************************
@@ -831,7 +853,7 @@ delay(900);
 	      {
 	      case 1: principal(mcount,fcount,mindex,findex);
 			   break;
-	      case 2: faculty(mcount,fcount,mindex,findex);
+	      case 2: faculty(mcount,fcount,mindex,findex,facultyvoter,&votercountf);
 		       break;
 	      case 3: //student();
 		      //break;
